@@ -20,6 +20,7 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductController {
 
+    @Autowired private ProductRepository productRepository;
     @Autowired private GetAllProductsQueryHandler getAllProductsQueryHandler;
     @Autowired private GetProductQueryHandler getProductQueryHandler;
     @Autowired private CreateProductCommandHandler createProductCommandHandler;
@@ -27,6 +28,13 @@ public class ProductController {
     @Autowired private DeleteProductCommandHandler deleteProductCommandHandler;
 
     //CRUD
+
+    @GetMapping("/price/{maxPrice}")
+    public ResponseEntity<List<Product>> getProductsWithPriceLessThan(@PathVariable Double maxPrice) {
+        List<Product> productsList = productRepository.findProductsWithPriceLessThan(maxPrice);
+        return ResponseEntity.status(HttpStatus.OK).body(productsList);
+    }
+
     @GetMapping()
     public ResponseEntity<List<ProductDTO>> getProducts() {
         return getAllProductsQueryHandler.execute(null);

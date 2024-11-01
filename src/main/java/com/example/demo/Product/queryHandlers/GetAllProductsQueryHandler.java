@@ -21,11 +21,13 @@ public class GetAllProductsQueryHandler implements Query<Void, List<ProductDTO>>
     @Override
     public ResponseEntity<List<ProductDTO>> execute(Void input) {
 
-        List<ProductDTO> productDTOs = productRepository
-                .findAll()
-                .stream()
-                .map(ProductDTO::new)
-                .toList();
+//        List<ProductDTO> productDTOs = productRepository
+//                .findAll()
+//                .stream()
+//                .map(ProductDTO::new)
+//                .toList();
+
+        List<ProductDTO> productDTOs = productRepository.getAllProductDTOs();
 
         return ResponseEntity.status(HttpStatus.OK).body(productDTOs);
     }
